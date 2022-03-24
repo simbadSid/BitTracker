@@ -1,0 +1,96 @@
+<project name="BitTracker"
+         default="distribute" basedir=".">
+    <description>
+           TODO
+    </description>
+
+
+    <!-- Set global properties for this build -->
+    <property name="projectName"    value="BitTracker" />
+    <property name="mainClass"      value="main/java/BitTracker" />
+    <property name="lib.junit"      value="lib/junit-4.10.jar" />
+    <property name="version"        value="1.0" />
+    <property name="dir.src"        location="src" />
+    <property name="dir.build"      location="bin" />
+    <property name="dir.lib"      	location="lib" />
+    <property name="dir.dist"       location="dist" />
+    <property name="dir.doc"        location="doc" />
+
+
+    <!-- Init the binary directories -->
+    <target     name="init"
+                description="Create the binary directories">
+        <!-- Create the time stamp -->
+        <tstamp />
+        <mkdir dir="${dir.build}" />
+        <mkdir dir="${dir.dist}" />
+    </target>
+
+
+    <!-- Compile each java file -->
+    <target     name="compile"
+                depends="init"
+                description="Compile the java sources">
+        <javac srcdir="${dir.src}" destdir="${dir.build}" >
+			<classpath>
+				<fileset dir="${dir.lib}/">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+        </javac>
+    </target>
+
+
+    <!-- Generate an executable jar -->
+    <target     name="distribute"
+                depends="compile"
+                description="Generate the distribution">
+
+        <jar destfile="${dir.dist}/${projectName}-${version}.jar" basedir="${dir.build}">
+            <manifest>
+            	<attribute name="Main-Class" value="${mainClass}" />
+            </manifest>
+			<zipgroupfileset dir="${dir.lib}" includes="**/*.jar"/>
+        </jar>
+    </target>
+
+
+	<target name="test" depends="compile">
+        <junit>
+            <classpath>
+                <pathelement location="${dir.build}" />
+                <pathelement location="${lib.junit}"/>
+            </classpath>
+            <batchtest>
+                <fileset dir="${dir.build}">
+                    <include name="**/*Test*" />
+                </fileset>
+            </batchtest>
+            <formatter type="brief" usefile="false"/>
+        </junit>
+    </target>
+
+
+	<!-- Generate javadocs for current project into ${dir.dir.doc} -->
+    <target     name="doc"
+                depends="init"
+                description="Generate Java documentation">
+        <javadoc sourcepath="${dir.src}" destdir="${dir.doc}">
+			<classpath>
+				<fileset dir="${dir.lib}/">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+        </javadoc>
+    </target>
+
+
+	<!-- Clean all the binary directories -->
+    <target     name="clean"
+                description="Clean up all the binary directories">
+        <delete dir="${dir.build}" />
+        <delete dir="${dir.dist}" />
+        <delete dir="${dir.doc}" />
+    </target>
+
+</project>
