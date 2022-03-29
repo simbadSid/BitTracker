@@ -29,7 +29,7 @@
 
     <!-- Compile each java file -->
     <target     name="compile"
-                depends="init"
+                depends="clean,init"
                 description="Compile the java sources">
         <javac srcdir="${dir.src}" destdir="${dir.build}" >
 			<classpath>

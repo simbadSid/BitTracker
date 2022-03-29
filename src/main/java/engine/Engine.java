@@ -1,7 +1,7 @@
 package main.java.engine;
 
-import main.java.automaton.State;
 import main.java.utils.Logger;
+import main.java.automaton.StateAutomaton;
 
 
 
@@ -13,8 +13,15 @@ public abstract class Engine
 //=======================================
 // Attributes
 //=======================================
-	private BasePoint	basePoint;
-	private State		currentState;
+	protected	BasePoint		basePoint;
+	private		StateAutomaton	stateAutomaton;
+
+
+//=======================================
+// Local methods
+//=======================================
+	public void setBasePoint		(BasePoint basePoint)			{this.basePoint			= new BasePoint(basePoint);}
+	public void setStateAutomaton	(StateAutomaton stateAutomaton)	{this.stateAutomaton	= stateAutomaton;}
 
 
 //=======================================
@@ -28,18 +35,19 @@ public abstract class Engine
 //=======================================
 // Private methods
 //=======================================
-	protected void checkUpdatePosition()
+	protected void updatePosition()
 	{
-		Logger.log(" New tick for position check");
+		Logger.log("\n--------------------------------------");
+		Logger.log(" New tick for position check: " + this.stateAutomaton.getCurrentPosition());
 
-		BitValue bitValue = BitValue.fetchNewValue();
-//		PositionAction positionAction = this.currentState.updatePosition(bitValue, basePoint, currentState);
-//		this.updatePosition(positionAction);
+		BitValue currentSample = BitValue.fetchNewValue();
+        Logger.log(" Current sample: " + currentSample);
+
+        this.stateAutomaton.updatePosition(currentSample, basePoint);
+		PositionType positionType = this.stateAutomaton.getCurrentPosition();
+		Logger.log(" => " + positionType);
+
+//TODO react to the new position
 	}
 
-	private void updatePosition(PositionAction positionAction)
-	{
-		// TODO update this.basePoint and this.currentState
-		
-	}
 }

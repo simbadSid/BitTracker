@@ -8,26 +8,40 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONObject;
 
-import main.java.utils.Logger;
+import main.java.utils.Utils;
 
 public class BitValue
 {
 //=======================================
 // Attributes
 //=======================================
-	private final static String URL_BITCOIN_PRICE = "https://api.coinbase.com/v2/prices/spot?currency=USD";
-	private double	value;
+	public static final String URL_BITCOIN_PRICE		= "https://api.coinbase.com/v2/prices/spot?currency=USD";
 
-	public BitValue(double value)
+	private double	value;
+	private String	currency;
+
+
+//=======================================
+// Constructor
+//=======================================
+	public BitValue(double value, String currency)
 	{
-		this.value = value;
+		assert (value >= 0);
+		this.value		= value;
+		this.currency	= new String(currency);
+	}
+
+	public BitValue(BitValue bv)
+	{
+		this(bv.value, bv.currency);
 	}
 
 
 //=======================================
 // Accesses
 //=======================================
-	public double getValue()	{return this.value;}
+	public double	getValue	()				{return this.value;}
+	public String	toString	()				{return Utils.genericToString(this.getClass().getDeclaredFields(), this);}
 
 
 //=======================================
@@ -43,7 +57,6 @@ public class BitValue
 
             con.connect();
 
-
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
             StringBuilder sb = new StringBuilder();
             String line;
@@ -52,10 +65,11 @@ public class BitValue
             }
             br.close();
 
-            Logger.log(sb.toString());
+            JSONObject jsonObject = new JSONObject(sb.toString());
+			double	value	= jsonObject.getJSONObject("data").getDouble("amount");
+			String	currency= jsonObject.getJSONObject("data").getString("currency");
 
-			double value = new JSONObject(sb.toString()).getJSONObject("data").getDouble("amount");
-			return new BitValue(value);
+			return new BitValue(value, currency);
         }
         catch (Exception e)
         {

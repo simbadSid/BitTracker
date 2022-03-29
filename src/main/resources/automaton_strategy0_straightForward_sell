@@ -1,0 +1,47 @@
+
+
+###################################
+# Code to be run on http://magjac.com/graphviz-visual-editor/
+###################################
+
+
+
+digraph finite_state_machine
+{
+	fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"]
+	edge [fontname="Helvetica,Arial,sans-serif"]
+	rankdir=LR;
+	node [shape = doublecircle]; "0- Seller Observes";
+	node [shape = elipse];
+
+
+
+    "0- Seller Observes" -> "0- Seller Observes" [label = "Price <~ Quantum"];
+
+    "0- Seller Observes" -> "1- Sell soon" [label = "Price > Quantum"];
+
+    "0- Seller Observes" -> "2- Sell VERY SOON" [label = "Price >> Quantum"];
+
+    "1- Sell soon" -> "0- Seller Observes" [label = "Price <~ Base"];
+
+    "1- Sell soon" -> "1- Sell soon" [label = "Price > Quantum"];
+
+    "1- Sell soon" -> "2- Sell VERY SOON" [label = "Price >> Quantum"];
+
+    "2- Sell VERY SOON" -> "0- Seller Observes" [label = "Price <~ Quantum"];
+
+    "2- Sell VERY SOON" -> "1- Sell soon" [label = "Price > Quantum"];
+
+    "2- Sell VERY SOON" -> "2- Sell VERY SOON" [label = "Price >> Quantum"];
+
+    "2- Sell VERY SOON" -> "3- Sell NOW" [label = "Price >> Quantum\n Price Decrease(Quantum optimized)"];
+
+    "3- Sell NOW" -> "3- Sell NOW" [label = "Price >> Quantum"];
+
+    "3- Sell NOW" -> "1- Sell soon" [label = "Price > Quantum"];
+
+    "3- Sell NOW" -> "0- Seller Observes" [label = "Price <~ Quantum"];
+
+
+}

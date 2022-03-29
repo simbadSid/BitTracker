@@ -16,22 +16,26 @@ public class Engine_timmer extends Engine
 //=======================================
 	private Timer		timer;
 	private TimerTask	timerTask;
-	
+
+
 //=======================================
 // Local methods
 //=======================================
 	@Override
 	public void start()
 	{
-		Logger.log("Start " + this.getClass());
+		if (this.timer != null)
+			return;
+
+		Logger.log(String.format("Start %s with base-point: %s", this.getClass().getSimpleName(), super.basePoint));
 
 		Signal.handle(new Signal("INT"),  signal -> this.stop());
-		this.timer		= new Timer(); 
+		this.timer		= new Timer();
 	    this.timerTask	= new TimerTask()
 	    {
-			public void run() 
+			public void run()
 			{
-				checkUpdatePosition();
+				updatePosition();
 			}
 	    };
 
@@ -41,9 +45,15 @@ public class Engine_timmer extends Engine
 	@Override
 	public void stop()
 	{
+		if (this.timer == null)
+			return;
+
 		Logger.log("Stop " + this.getClass());
 
 		this.timer.cancel();
 		this.timer.purge();
+
+		this.timer		= null;
+		this.timerTask	= null;
 	}
 }
