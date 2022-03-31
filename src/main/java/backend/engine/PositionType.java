@@ -1,4 +1,4 @@
-package main.java.engine;
+package main.java.backend.engine;
 
 public enum PositionType {
 	BUYER_OBSERVER,

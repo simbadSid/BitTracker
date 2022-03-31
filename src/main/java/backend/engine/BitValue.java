@@ -1,4 +1,4 @@
-package main.java.engine;
+package main.java.backend.engine;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,8 +40,8 @@ public class BitValue
 //=======================================
 // Accesses
 //=======================================
-	public double	getValue	()				{return this.value;}
-	public String	toString	()				{return Utils.genericToString(this.getClass().getDeclaredFields(), this);}
+	public double	getValue	()	{return this.value;}
+	public String	toString	()	{return Utils.genericToString(this.getClass().getDeclaredFields(), this);}
 
 
 //=======================================

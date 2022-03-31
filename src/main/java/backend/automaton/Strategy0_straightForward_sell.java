@@ -1,7 +1,7 @@
-package main.java.automaton;
+package main.java.backend.automaton;
 
-import main.java.engine.BitDifference;
-import main.java.engine.PositionType;
+import main.java.backend.engine.BitDifference;
+import main.java.backend.engine.PositionType;
 
 public class Strategy0_straightForward_sell extends StateAutomaton
 {

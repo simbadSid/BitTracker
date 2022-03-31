@@ -1,12 +1,12 @@
-package main.java.automaton;
+package main.java.backend.automaton;
 
 import java.util.HashMap;
 
-import main.java.engine.BasePoint;
-import main.java.engine.BitValue;
-import main.java.engine.PositionType;
-import main.java.engine.BitDifference;
-import main.java.utils.Logger;
+import main.java.IO.Logger;
+import main.java.backend.engine.BasePoint;
+import main.java.backend.engine.BitDifference;
+import main.java.backend.engine.BitValue;
+import main.java.backend.engine.PositionType;
 import main.java.utils.Utils;
 
 public abstract class StateAutomaton

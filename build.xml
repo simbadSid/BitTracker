@@ -7,7 +7,7 @@
 
     <!-- Set global properties for this build -->
     <property name="projectName"    value="BitTracker" />
-    <property name="mainClass"      value="main/java/BitTracker" />
+    <property name="mainClass"      value="main/java/backend/BitTracker" />
     <property name="lib.junit"      value="lib/junit-4.10.jar" />
     <property name="version"        value="1.0" />
     <property name="dir.src"        location="src" />
