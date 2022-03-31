@@ -39,7 +39,7 @@ public class Engine_timmer extends Engine
 			}
 	    };
 
-	    timer.schedule(timerTask, 0, 3000);
+	    timer.schedule(timerTask, 0, sampleDelayInSec);
 	}
 
 	@Override

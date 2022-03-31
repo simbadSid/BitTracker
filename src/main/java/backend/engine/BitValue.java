@@ -89,4 +89,20 @@ public class BitValue
 
         return null;
 	}
+
+	public boolean isHigher(BitValue bitValue)
+	{
+		if (!this.currency.equals(bitValue.currency))
+			throw new RuntimeException(String.format("Comparing non comparable bit value %s with %s", this.toString(), bitValue.toString()));
+
+		return this.value > bitValue.value;
+	}
+
+	public boolean isLower(BitValue bitValue)
+	{
+		if (!this.currency.equals(bitValue.currency))
+			throw new RuntimeException(String.format("Comparing non comparable bit value %s with %s", this.toString(), bitValue.toString()));
+
+		return this.value < bitValue.value;
+	}
 }

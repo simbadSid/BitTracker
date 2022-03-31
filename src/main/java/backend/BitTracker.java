@@ -1,6 +1,7 @@
 package main.java.backend;
 
 
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 import main.java.IO.DataPersistence;
@@ -37,22 +38,29 @@ public class BitTracker
 						Class<? extends LoggerInterface>			classLogger,
 						Class<? extends DataPersistenceInterface>	classDataPersistence)
 	{
+
 		this.classStateAutomatonBuyer = classStateAutomatonBuyer;
 		this.classStateAutomatonSeller= classStateAutomatonSeller;
 		try
 		{
-			this.engine									= classEngine.getConstructor().newInstance();
-			LoggerInterface logger						= classLogger.getConstructor().newInstance();
-			DataPersistenceInterface dataPersistence	= classDataPersistence.getConstructor().newInstance();
-
+			// Init the logger
+			LoggerInterface logger = classLogger.getConstructor().newInstance();
 			Logger.initLogger(logger);
+
+			// Init the dataPersistance mechanism
+			DataPersistenceInterface dataPersistence = classDataPersistence.getConstructor(String.class).newInstance(LocalDateTime.now().toString());
 			DataPersistence.initDataPersistence(dataPersistence);
+
+			// Init the engine
+			this.engine = classEngine.getConstructor().newInstance();
+
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 			throw new RuntimeException();
 		}
+
 	}
 
 

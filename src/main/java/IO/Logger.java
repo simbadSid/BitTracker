@@ -20,7 +20,19 @@ public abstract class Logger
 
 	public static void log(String str)
 	{
-		assert(Logger.loggerClass != null);
+		Logger.checkInitialisation();
 		Logger.loggerClass.log(str);
 	};
+
+
+//=======================================
+// Private methods
+//=======================================
+	private static void checkInitialisation()
+	{
+		if (Logger.loggerClass == null)
+		{
+			throw new RuntimeException("Class " + Logger.class + " is called without being initialized");
+		}
+	}
 }

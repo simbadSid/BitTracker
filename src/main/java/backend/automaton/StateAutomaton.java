@@ -1,5 +1,6 @@
 package main.java.backend.automaton;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import main.java.IO.Logger;
@@ -53,6 +54,7 @@ public abstract class StateAutomaton
 	protected 	HashMap<StateTransition, PositionType>	transitionSet;
 	private		PositionType							currentPositionType;
 	private		BitValue								previousSample;
+	private		LocalDateTime							previousSampleDate;
 
 
 //=======================================
@@ -63,14 +65,16 @@ public abstract class StateAutomaton
 		this.transitionSet			= new HashMap<StateTransition, PositionType>();
 		this.currentPositionType	= positionType;
 		this.previousSample			= null;
+		this.previousSampleDate		= null;
 	}
 
 
 //=======================================
 // Accesses
 //=======================================
-	public String		getId()				{return this.getClass().getSimpleName();}
-	public PositionType	getCurrentPosition(){return this.currentPositionType;}
+	public String			getId					(){return this.getClass().getSimpleName();}
+	public PositionType		getCurrentPosition		(){return this.currentPositionType;}
+	public LocalDateTime	getPreviousSampleDate	(){return this.previousSampleDate;}
 
 
 //=======================================
@@ -81,7 +85,7 @@ public abstract class StateAutomaton
 	 * @param currentSample Current value of the the price
 	 * @param basePoint type of the base-point being observed
 	 */
-	public void updatePosition(BitValue currentSample, BasePoint basePoint)
+	public void updatePosition(BasePoint basePoint, BitValue currentSample, LocalDateTime currentSampleDate)
 	{
 		BitDifference bitDifference;
 		if (basePoint.isBuyer())
@@ -96,7 +100,8 @@ public abstract class StateAutomaton
 		if (this.currentPositionType == null)
 			throw new RuntimeException(String.format("The automaton \"%s\" has no transition from the current state \"%s\" with the new sample \"%f (%s)\"", this.getId(), stateTransition.positionType, currentSample.getValue(), stateTransition.bitDifference));
 
-		this.previousSample = new BitValue(currentSample);
+		this.previousSample		= new BitValue(currentSample);
+		this.previousSampleDate	= currentSampleDate;
 	}
 
 	public void logTransitionSet()
