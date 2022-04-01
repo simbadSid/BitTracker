@@ -60,6 +60,7 @@ public abstract class DataPersistence
 		{
 			DataPersistence.dataPersistenceClass.persistLine(line);
 		}
+		DataPersistence.emptyBuffer();
 	}
 
 

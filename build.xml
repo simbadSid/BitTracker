@@ -6,15 +6,16 @@
 
 
     <!-- Set global properties for this build -->
-    <property name="projectName"    value="BitTracker" />
-    <property name="mainClass"      value="main/java/backend/BitTracker" />
-    <property name="lib.junit"      value="lib/junit-4.10.jar" />
-    <property name="version"        value="1.0" />
-    <property name="dir.src"        location="src" />
-    <property name="dir.build"      location="bin" />
-    <property name="dir.lib"      	location="lib" />
-    <property name="dir.dist"       location="dist" />
-    <property name="dir.doc"        location="doc" />
+    <property name="projectName"    	value="BitTracker" />
+    <property name="mainClass"      	value="main/java/backend/BitTracker" />
+    <property name="lib.junit"      	value="lib/junit-4.10.jar" />
+    <property name="version"        	value="1.0" />
+    <property name="dir.src"        	location="src" />
+    <property name="dir.build"      	location="bin" />
+    <property name="dir.lib"      		location="lib" />
+    <property name="dir.dist"       	location="dist" />
+    <property name="dir.doc"        	location="doc" />
+    <property name="dir.outputFiles"	location="outputFiles" />
 
 
     <!-- Init the binary directories -->
@@ -24,6 +25,7 @@
         <tstamp />
         <mkdir dir="${dir.build}" />
         <mkdir dir="${dir.dist}" />
+        <mkdir dir="${dir.outputFiles}" />
     </target>
 
 

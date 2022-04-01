@@ -11,7 +11,7 @@ public class DataPersistence_file implements DataPersistenceInterface
 //=======================================
 // Attributes
 //=======================================
-	public static final String OUTPUT_DIR = "src/main/resources/outputFiles/";
+	public static final String OUTPUT_DIR = "outputFiles/";
 	private String fileName;
 
 

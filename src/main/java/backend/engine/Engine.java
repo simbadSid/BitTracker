@@ -85,7 +85,8 @@ public abstract class Engine
 					max = bitValue;
 			}
 
-			candleStick candleStick = new candleStick(min, max, (BitValue)bitValueList.getFirst(), (BitValue)bitValueList.getLast());
+			candleStick candleStick = new candleStick((BitValue)bitValueList.getFirst(), (BitValue)bitValueList.getLast(), min, max);
+			DataPersistence.emptyBuffer();
 			DataPersistence.addLine(candleStick);
 			DataPersistence.flushBuffer();
 			Logger.log("New candleStick: " + candleStick);
@@ -94,26 +95,35 @@ public abstract class Engine
 
 	private boolean isInSameCandleStickUnit(LocalDateTime currentSampleDate, LocalDateTime previousSampleDate)
 	{
+		DayOfWeek	current_dayOfWeek	= currentSampleDate.getDayOfWeek();
 		int			current_minutes		= currentSampleDate.getMinute();
 		int			current_hour		= currentSampleDate.getHour();
 		int			current_day			= currentSampleDate.getDayOfMonth();
+		int			current_month		= currentSampleDate.getMonthValue();
 		int			current_year		= currentSampleDate.getYear();
 
-		int			previous_minutes	= currentSampleDate.getMinute();
+		DayOfWeek	previous_dayOfWeek	= previousSampleDate.getDayOfWeek();
+		int			previous_minutes	= previousSampleDate.getMinute();
 		int			previous_hour		= previousSampleDate.getHour();
 		int			previous_day		= previousSampleDate.getDayOfMonth();
+		int			previous_month		= previousSampleDate.getMonthValue();
 		int			previous_year		= previousSampleDate.getYear();
 
 		switch (this.candleStickUnit)
 		{
 			case MINUTES:
-				return ((current_year == previous_year) & (current_day == previous_day) & (current_hour == previous_hour) & (current_minutes == previous_minutes));
+				return ((current_year == previous_year) & (current_month == previous_month) & (current_day == previous_day) & (current_hour == previous_hour) & (current_minutes == previous_minutes));
 			case HOURS:
-				return ((current_year == previous_year) & (current_day == previous_day) & (current_hour == previous_hour));
+				return ((current_year == previous_year) & (current_month == previous_month) & (current_day == previous_day) & (current_hour == previous_hour));
 			case DAYS:
-				return ((current_year == previous_year) & (current_day == previous_day));
-			case WEEKS:
+				return ((current_year == previous_year) & (current_month == previous_month) & (current_day == previous_day));
+			case MONTHS:
+				return ((current_year == previous_year) & (current_month == previous_month));
+			case YEARS:
 				return ((current_year == previous_year));
+//TODO check weeks condiftion
+			case WEEKS:
+				return ((current_year == previous_year) & (current_month == previous_month) & (current_day-previous_day < 7) & (current_dayOfWeek.getValue() >= previous_dayOfWeek.getValue()));
 			default:
 				throw new RuntimeException("Unhandled candle-stick unit: " + this.candleStickUnit);
 		}

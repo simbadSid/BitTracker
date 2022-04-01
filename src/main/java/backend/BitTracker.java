@@ -32,6 +32,17 @@ public class BitTracker
 //=======================================
 // Constructor
 //=======================================
+	public BitTracker()
+	{
+		this(
+				Strategy0_straightForward_buy.class,
+				Strategy0_straightForward_sell.class,
+				Engine_timmer.class,
+				Logger_terminal.class,
+				DataPersistence_file.class);
+
+	}
+
 	public BitTracker(	Class<? extends StateAutomaton>				classStateAutomatonBuyer,
 						Class<? extends StateAutomaton>				classStateAutomatonSeller,
 						Class<? extends Engine>						classEngine,
@@ -121,13 +132,7 @@ public class BitTracker
 //=======================================
 	public static void main(String[] args)
 	{
-		BitTracker bitTracker = new BitTracker(
-				Strategy0_straightForward_buy.class,
-				Strategy0_straightForward_sell.class,
-				Engine_timmer.class,
-				Logger_terminal.class,
-				DataPersistence_file.class);
-
+		BitTracker bitTracker = new BitTracker();
 		bitTracker.launch();
 	}
 }
